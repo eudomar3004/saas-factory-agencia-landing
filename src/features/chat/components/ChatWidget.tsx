@@ -5,10 +5,10 @@ import { useChat } from '@ai-sdk/react'
 import { Bot, Send, MessageSquare } from 'lucide-react'
 
 const QUICK_PROMPTS = [
-  'Sistema a medida',
-  'Automatizacion IA',
-  'Agentes IA',
-  'Cuanto tarda?',
+  'Necesito un sistema a medida',
+  'Quiero automatizar con IA',
+  'Cuanto tarda un proyecto?',
+  'Que proyectos han hecho?',
 ]
 
 function getVisitorId(): string {
@@ -84,7 +84,7 @@ export function ChatWidget() {
               </div>
               <div className="glass-assistant-message rounded-2xl rounded-tl-sm px-4 py-3">
                 <p className="text-sm text-white/90">
-                  Hola! Soy Levy, tu consultor de software. Cuentame, que necesita tu negocio?
+                  Hola! Soy Levy, consultor de software en SaaS Factory. Cuentame sobre tu negocio y te digo como podemos ayudarte.
                 </p>
               </div>
             </div>
