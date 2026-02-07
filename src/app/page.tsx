@@ -70,21 +70,8 @@ export default function Home() {
           </a>
         </div>
 
-        {/* Mobile hero - compact */}
-        <div className={`text-center px-3 pb-2 flex-shrink-0 ${mounted ? 'animate-fadeInUp' : 'opacity-0'}`}>
-          <h1 className="text-lg font-bold text-white mb-0.5 tracking-tight leading-tight">
-            Tu Software{' '}
-            <span className="bg-gradient-to-r from-violet-400 via-purple-400 to-violet-400 bg-clip-text text-transparent">a Medida</span>
-          </h1>
-          <p className="text-white/55 text-[10px] leading-snug">
-            De <span className="text-amber-400 font-medium">meses</span> a{' '}
-            <span className="text-emerald-400 font-medium">semanas</span>.{' '}
-            ERPs, CRMs, automatizaciones y agentes IA.
-          </p>
-        </div>
-
-        {/* Mobile chat - fills all remaining space */}
-        <div className={`flex-1 min-h-0 px-3 pb-1 ${mounted ? 'animate-fadeInScale delay-200' : 'opacity-0'}`}>
+        {/* Mobile chat - fullscreen */}
+        <div className={`flex-1 min-h-0 px-3 pb-2 ${mounted ? 'animate-fadeInScale delay-200' : 'opacity-0'}`}>
           <div className="relative h-full">
             <div className="absolute -inset-2 bg-violet-600/10 rounded-2xl blur-xl" />
             <div className="relative glass-panel-strong rounded-2xl overflow-hidden h-full">
@@ -93,78 +80,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Mobile bottom sections - scrollable */}
-        <div className="flex-shrink-0 overflow-y-auto max-h-[35vh] px-3 py-2 space-y-2">
-          {/* Services 2x2 */}
-          <div>
-            <p className="text-[9px] uppercase tracking-widest text-violet-400/80 mb-1 font-medium">Lo que construimos</p>
-            <div className="grid grid-cols-2 gap-1.5">
-              {SERVICES.map(s => (
-                <div key={s.title} className="glass-panel rounded-lg p-2">
-                  <s.icon className="w-3 h-3 text-violet-400 mb-0.5" />
-                  <h4 className="text-[10px] font-semibold text-white mb-0.5 leading-none">{s.title}</h4>
-                  <p className="text-[9px] text-[var(--muted)] leading-tight">{s.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Differentiators - compact row */}
-          <div>
-            <p className="text-[9px] uppercase tracking-widest text-amber-400/70 mb-1 font-medium">Nuestro diferenciador</p>
-            <div className="grid grid-cols-3 gap-1.5">
-              {DIFFERENTIATORS.map(d => (
-                <div key={d.title} className="text-center p-1.5 rounded-lg bg-white/[0.02] border border-white/[0.04]">
-                  <div className="w-5 h-5 rounded-md bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mx-auto mb-0.5">
-                    <d.icon className="w-2.5 h-2.5 text-amber-400" />
-                  </div>
-                  <h4 className="text-[9px] font-semibold text-white leading-tight">{d.title}</h4>
-                  <p className="text-[8px] text-[var(--muted)] leading-tight">{d.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Projects - inline */}
-          <div>
-            <p className="text-[9px] uppercase tracking-widest text-emerald-400/70 mb-1 font-medium">Proyectos en produccion</p>
-            <div className="grid grid-cols-2 gap-1.5">
-              {PROJECTS.map(p => (
-                <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer" className="block glass-panel rounded-lg p-2 group">
-                  <div className="flex items-center justify-between mb-0.5">
-                    <h4 className="text-[10px] font-semibold text-white group-hover:text-emerald-400 transition-colors">{p.name}</h4>
-                    <ArrowUpRight className="w-2.5 h-2.5 text-[var(--muted)]" />
-                  </div>
-                  <p className="text-[9px] text-[var(--muted)] leading-tight mb-1">{p.desc}</p>
-                  <div className="flex gap-1 flex-wrap">
-                    {p.tags.map(t => (
-                      <span key={t} className="text-[8px] px-1 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400/70 border border-emerald-500/15">{t}</span>
-                    ))}
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* CTA */}
-          <div className="glass-panel rounded-lg p-2.5 border-emerald-500/20 bg-gradient-to-br from-emerald-500/5 to-transparent">
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <h3 className="text-[11px] font-bold text-white">Diagnostico gratuito</h3>
-                <p className="text-[9px] text-[var(--muted)] leading-tight">15 min. Plan concreto.</p>
-              </div>
-              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500 text-white text-[10px] font-medium hover:bg-emerald-400 transition-all whitespace-nowrap flex-shrink-0">
-                <WhatsAppIcon className="w-3 h-3" />
-                {WHATSAPP_NUMBER}
-              </a>
-            </div>
-          </div>
-
-          {/* Mobile footer */}
-          <p className="text-center text-[9px] text-white/15 pb-1">
-            {WHATSAPP_NUMBER} · Software personalizado para tu negocio
-          </p>
-        </div>
       </div>
 
       {/* ═══════════════════════════════════════════════════ */}

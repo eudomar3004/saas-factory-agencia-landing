@@ -78,7 +78,7 @@ export function ChatWidget() {
         {!hasMessages && (
           <div className="flex justify-start animate-fadeInUp">
             <div className="flex gap-2 max-w-[85%]">
-              <Image src="/levy-avatar.webp" alt="Levy" width={28} height={28} className="rounded-full flex-shrink-0 mt-1" />
+              <Image src="/levy-avatar.webp" alt="Levy" width={28} height={28} className="w-7 h-7 rounded-full object-cover flex-shrink-0 mt-1" />
               <div className="glass-assistant-message rounded-2xl rounded-tl-sm px-3 py-2.5">
                 <p className="text-xs text-white/90">
                   Hola! Soy Levy, consultor de software en SaaS Factory. Cuentame sobre tu negocio y te digo como podemos ayudarte.
@@ -95,7 +95,7 @@ export function ChatWidget() {
           >
             {m.role === 'assistant' ? (
               <div className="flex gap-2 max-w-[85%]">
-                <Image src="/levy-avatar.webp" alt="Levy" width={28} height={28} className="rounded-full flex-shrink-0 mt-1" />
+                <Image src="/levy-avatar.webp" alt="Levy" width={28} height={28} className="w-7 h-7 rounded-full object-cover flex-shrink-0 mt-1" />
                 <div className="glass-assistant-message rounded-2xl rounded-tl-sm px-3 py-2.5">
                   <p className="text-xs text-white/90 whitespace-pre-wrap">
                     {getMessageText(m)}
@@ -113,7 +113,7 @@ export function ChatWidget() {
         {isLoading && messages[messages.length - 1]?.role === 'user' && (
           <div className="flex justify-start streaming-fade">
             <div className="flex gap-2">
-              <Image src="/levy-avatar.webp" alt="Levy" width={28} height={28} className="rounded-full flex-shrink-0 mt-1" />
+              <Image src="/levy-avatar.webp" alt="Levy" width={28} height={28} className="w-7 h-7 rounded-full object-cover flex-shrink-0 mt-1" />
               <div className="glass-assistant-message rounded-2xl rounded-tl-sm px-3 py-2.5">
                 <div className="flex gap-1">
                   <span className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
