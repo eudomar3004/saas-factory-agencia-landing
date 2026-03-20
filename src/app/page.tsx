@@ -50,9 +50,9 @@ export default function Home() {
       {/* ═══════════════════════════════════ */}
       {/* MOBILE: stacked scrollable layout  */}
       {/* ═══════════════════════════════════ */}
-      <div className="relative z-10 lg:hidden flex flex-col h-screen h-[100dvh]">
+      <div className="relative z-10 lg:hidden flex flex-col min-h-[100dvh] overflow-y-auto">
         {/* Mobile top bar */}
-        <div className="flex items-center justify-between px-3 py-2 flex-shrink-0">
+        <div className="flex items-center justify-between px-3 py-2 flex-shrink-0 sticky top-0 z-20 bg-[var(--background)]/80 backdrop-blur-sm">
           <div className="flex items-center gap-1.5">
             <Image src="/logo-icon.png" alt="ailoom" width={22} height={22} className="rounded-full object-contain transition-all duration-300 hover:drop-shadow-[0_0_8px_rgba(255,196,0,0.6)]" unoptimized />
             <span className="text-[11px] font-semibold text-white">ailoom</span>
@@ -63,12 +63,44 @@ export default function Home() {
           </button>
         </div>
 
-        {/* Mobile chat - fullscreen */}
-        <div className={`flex-1 min-h-0 px-3 pb-2 ${mounted ? 'animate-fadeInScale delay-200' : 'opacity-0'}`}>
-          <div className="relative h-full">
+        {/* Mobile chat - max height so keyboard + send button always visible */}
+        <div className={`px-3 pb-3 ${mounted ? 'animate-fadeInScale delay-200' : 'opacity-0'}`}>
+          <div className="relative h-[65dvh] min-h-[380px]">
             <div className="absolute -inset-2 bg-[#FFC400]/10 rounded-2xl blur-xl" />
             <div className="relative glass-panel-strong rounded-2xl overflow-hidden h-full">
               <ChatWidget />
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile: key landing content below chat */}
+        <div className={`px-3 pb-8 space-y-3 ${mounted ? 'animate-fadeInUp delay-300' : 'opacity-0'}`}>
+          <div className="space-y-2">
+            <p className="text-[10px] uppercase tracking-widest text-[#FFC400]/80 font-medium">Lo que construimos</p>
+            <div className="grid grid-cols-2 gap-1.5">
+              {SERVICES.map((s) => (
+                <div key={s.title} className="glass-panel rounded-xl p-2.5 group">
+                  <s.icon className="w-3.5 h-3.5 text-[#FFC400] mb-1" />
+                  <h4 className="text-[10px] font-semibold text-white mb-0.5">{s.title}</h4>
+                  <p className="text-[9px] text-[var(--muted)] leading-snug">{s.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="glass-panel rounded-xl p-3 border-[#FFC400]/20 bg-gradient-to-r from-[#FFC400]/5 to-transparent">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <h3 className="text-xs font-bold text-white mb-0.5">Auditoría de IA Gratuita</h3>
+                <p className="text-[10px] text-[var(--muted)]">30 min con el fundador. Plan concreto para tu negocio.</p>
+              </div>
+              <button
+                onClick={() => setCalendlyOpen(true)}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFC400] text-black text-[10px] font-medium whitespace-nowrap flex-shrink-0"
+              >
+                <Calendar className="w-3 h-3" />
+                Agendar
+              </button>
             </div>
           </div>
         </div>

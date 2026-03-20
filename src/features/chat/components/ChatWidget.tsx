@@ -153,7 +153,7 @@ export function ChatWidget() {
       </div>
 
       {/* Input */}
-      <form onSubmit={handleSubmit} className="p-2.5 border-t border-[var(--border)]">
+      <form onSubmit={handleSubmit} className="p-2.5 border-t border-[var(--border)] pb-[max(0.625rem,env(safe-area-inset-bottom))]">
         <div className="flex gap-2 items-center">
           <input
             type="text"
