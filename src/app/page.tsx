@@ -70,39 +70,41 @@ export default function Home() {
         </div>
 
         {/* Hero */}
-        <div className="px-5 pt-8 pb-6 text-center">
-          <h1 className="text-2xl font-bold text-white mb-2 leading-tight tracking-tight">
+        <div className="px-5 pt-10 pb-8 text-center">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#FFC400]/30 bg-[#FFC400]/8 text-[10px] text-[#FFC400] font-medium uppercase tracking-widest mb-5">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            Sistemas de IA en producción
+          </div>
+          <h1 className="text-[2.6rem] font-bold text-white mb-4 leading-[1.1] tracking-tight">
             Tu Software{' '}
-            <span className="bg-gradient-to-r from-[#FFC400] via-[#FFE066] to-[#FFC400] bg-clip-text text-transparent shimmer-text">
+            <span className="text-[#FFC400]">
               a Medida
             </span>
           </h1>
-          <p className="text-white/55 text-sm leading-relaxed max-w-xs mx-auto">
-            De <span className="text-amber-400 font-medium">meses</span> a{' '}
-            <span className="text-emerald-400 font-medium">semanas</span>.{' '}
-            ERPs, CRMs, automatizaciones y agentes IA.
+          <p className="text-white/65 text-base leading-relaxed max-w-[280px] mx-auto mb-7">
+            Sistemas que <span className="text-white font-medium">venden y operan</span> de forma autónoma — mientras tú escalas sin fricción.
           </p>
-          <div className="flex flex-wrap justify-center gap-1.5 mt-3">
-            {['ERPs & CRMs', 'Agentes IA', 'Automatizacion', 'Dashboards'].map((tag) => (
-              <span key={tag} className="px-2.5 py-0.5 text-[10px] rounded-full border border-[#FFC400]/20 bg-[#FFC400]/5 text-[#FFC400]/80">
-                {tag}
-              </span>
-            ))}
-          </div>
+          <button
+            onClick={() => setCalendlyOpen(true)}
+            className="w-full py-4 rounded-xl bg-[#FFC400] text-black text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_32px_rgba(255,196,0,0.35)]"
+          >
+            Quiero mi Auditoría Gratuita
+            <ArrowUpRight className="w-4 h-4" />
+          </button>
         </div>
 
         {/* Services */}
         <div className="px-4 pb-5">
           <p className="text-[10px] uppercase tracking-widest text-[#FFC400]/80 font-medium mb-2">Lo que construimos</p>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-3">
             {SERVICES.map((s) => (
-              <div key={s.title} className="glass-panel rounded-xl p-4 flex items-center gap-4">
-                <div className="w-10 h-10 rounded-xl bg-[#FFC400]/10 border border-[#FFC400]/20 flex items-center justify-center flex-shrink-0">
-                  <s.icon className="w-5 h-5 text-[#FFC400]" />
+              <div key={s.title} className="glass-panel rounded-2xl p-5 flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#FFC400]/10 border border-[#FFC400]/20 flex items-center justify-center flex-shrink-0">
+                  <s.icon className="w-6 h-6 text-[#FFC400]" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-semibold text-white mb-0.5">{s.title}</h4>
-                  <p className="text-xs text-[var(--muted)] leading-snug">{s.desc}</p>
+                  <h4 className="text-base font-semibold text-white mb-0.5">{s.title}</h4>
+                  <p className="text-sm text-[var(--muted)] leading-snug">{s.desc}</p>
                 </div>
               </div>
             ))}
@@ -114,13 +116,13 @@ export default function Home() {
           <p className="text-[10px] uppercase tracking-widest text-amber-400/70 font-medium mb-2">Nuestro diferenciador</p>
           <div className="space-y-2">
             {DIFFERENTIATORS.map((d) => (
-              <div key={d.title} className="flex items-center gap-3 p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-                <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center flex-shrink-0">
-                  <d.icon className="w-4 h-4 text-amber-400" />
+              <div key={d.title} className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
+                <div className="w-11 h-11 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center flex-shrink-0">
+                  <d.icon className="w-5 h-5 text-amber-400" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-semibold text-white">{d.title}</h4>
-                  <p className="text-[10px] text-[var(--muted)] leading-snug">{d.desc}</p>
+                  <h4 className="text-sm font-semibold text-white">{d.title}</h4>
+                  <p className="text-xs text-[var(--muted)] leading-snug">{d.desc}</p>
                 </div>
               </div>
             ))}
