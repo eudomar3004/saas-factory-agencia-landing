@@ -18,11 +18,12 @@ export default function AuthLayout({
         <div className="flex justify-center mb-8">
           <div className="relative">
             <Image
-              src="/logo.png"
-              alt="SaaS Factory"
+              src="/logo-icon.png"
+              alt="ailoom"
               width={60}
               height={60}
-              className="rounded-xl"
+              className="rounded-xl object-cover object-left"
+              unoptimized
             />
             <div className="absolute inset-0 rounded-xl animate-goldPulse opacity-60" />
           </div>

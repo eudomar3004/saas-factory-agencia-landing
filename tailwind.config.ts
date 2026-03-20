@@ -30,8 +30,8 @@ const config: Config = {
       },
       keyframes: {
         glow: {
-          from: { textShadow: '0 2px 10px rgba(139, 92, 246, 0.3)' },
-          to: { textShadow: '0 2px 20px rgba(139, 92, 246, 0.5)' },
+          from: { textShadow: '0 2px 10px rgba(255, 196, 0, 0.3)' },
+          to: { textShadow: '0 2px 20px rgba(255, 196, 0, 0.5)' },
         },
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
@@ -50,8 +50,8 @@ const config: Config = {
           to: { transform: 'translateX(0)' },
         },
         pulseGlow: {
-          '0%, 100%': { boxShadow: '0 0 30px rgba(139, 92, 246, 0.4)' },
-          '50%': { boxShadow: '0 0 50px rgba(139, 92, 246, 0.6), 0 0 70px rgba(139, 92, 246, 0.3)' },
+          '0%, 100%': { boxShadow: '0 0 30px rgba(255, 196, 0, 0.35)' },
+          '50%': { boxShadow: '0 0 50px rgba(255, 196, 0, 0.55), 0 0 70px rgba(255, 196, 0, 0.25)' },
         },
       },
     },

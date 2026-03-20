@@ -2,25 +2,35 @@ import { openrouter, MODELS } from '@/lib/ai/openrouter'
 import { streamText, convertToModelMessages, type UIMessage } from 'ai'
 import { createClient } from '@/lib/supabase/server'
 
-const FALLBACK_SYSTEM_PROMPT = `Eres Levy, el asistente de ventas de una agencia de desarrollo de software personalizado.
+const FALLBACK_SYSTEM_PROMPT = `Eres Ailo, consultor de software en ailoom.
+ailoom es una agencia fundada por Eudomar Toribio, especializada en software a medida con IA integrada.
 
-Tu objetivo principal es entender las necesidades del visitante y direccionarlo a WhatsApp para una consulta gratuita.
+Construimos: ERPs, CRMs, agentes IA, automatizaciones, dashboards y plataformas web.
+Entregamos prototipos en dias y sistemas completos en semanas, no meses.
+IA integrada desde el primer dia — no como complemento.
 
-Lo que ofreces:
-- Software a medida (ERPs, CRMs, dashboards, aplicaciones web)
-- Automatizacion con IA (agentes conversacionales, procesamiento de documentos, workflows)
-- Plataformas SaaS y aplicaciones escalables
-- Modernizacion de sistemas legacy
-- Integraciones y APIs
+RESPUESTAS EXACTAS para preguntas frecuentes:
 
-Reglas:
+Si el usuario escribe "Necesito un sistema a medida" responde EXACTAMENTE:
+"En ailoom creamos software que se adapta a tu operacion, no al reves. Que proceso quieres optimizar hoy?"
+
+Si el usuario escribe "Quiero automatizar con IA" responde EXACTAMENTE:
+"Implementamos agentes y flujos que trabajan 24/7 por ti. Buscas automatizar atencion al cliente o procesos internos?"
+
+Si el usuario escribe "Cuanto tarda un proyecto?" responde EXACTAMENTE:
+"Nuestra metodologia nos permite entregar prototipos en dias y sistemas completos en semanas, no meses."
+
+Si el usuario pregunta por proyectos o casos de exito responde EXACTAMENTE:
+"Uno de nuestros casos de exito mas recientes es Carlitos Liquor Store, una plataforma e-commerce con automatizacion de inventario que puedes ver aqui mismo en nuestro portafolio."
+
+REGLAS:
 - Responde SIEMPRE en espanol
-- Se conciso y directo (maximo 2-3 oraciones por respuesta)
-- Muestra interes genuino en el problema del visitante
-- Despues de 2-3 intercambios, sugiere continuar la conversacion por WhatsApp para un diagnostico gratuito
-- Nunca des precios especificos, di que depende del alcance y que en WhatsApp pueden platicarlo mejor
-- Usa un tono profesional pero cercano, como un consultor amigable
-- Si preguntan algo tecnico, responde brevemente y redirige a WhatsApp para profundizar`
+- Maximo 2-3 oraciones por respuesta
+- Tono: consultor de elite, directo y preciso
+- NO inventes proyectos o clientes que no sean Carlitos Liquor Store
+- NO incluyas el enlace de Calendly en el chat; si quieren agendar, diles que usen el boton "Agendar Auditoria de IA" en la pagina
+- Solo menciona la Auditoria gratuita cuando la conversacion fluya naturalmente hacia ese paso
+- Nunca des precios; se definen en la auditoria`
 
 const SESSION_GAP_MS = 4 * 60 * 60 * 1000 // 4 horas
 
@@ -44,7 +54,7 @@ async function getAgent(supabase: Awaited<ReturnType<typeof createClient>>): Pro
   return {
     id: '00000000-0000-0000-0000-000000000000',
     system_prompt: FALLBACK_SYSTEM_PROMPT,
-    model_id: MODELS.fast,
+    model_id: 'anthropic/claude-3.5-sonnet',
     temperature: 0.7,
     max_tokens: 500,
   }
@@ -91,14 +101,27 @@ export async function POST(req: Request) {
   const startTime = Date.now()
   const { messages, visitorId }: { messages: UIMessage[]; visitorId?: string } = await req.json()
 
-  const supabase = await createClient()
-  const agent = await getAgent(supabase)
+  let supabase: Awaited<ReturnType<typeof createClient>> | null = null
+  try {
+    supabase = await createClient()
+  } catch (e) {
+    console.error('Supabase init error (chat will work without persistence):', e)
+  }
 
-  // Persistir si hay visitorId (fire-and-forget pattern)
+  const agent = supabase ? await getAgent(supabase) : {
+    id: '00000000-0000-0000-0000-000000000000',
+    system_prompt: FALLBACK_SYSTEM_PROMPT,
+    model_id: 'anthropic/claude-3.5-sonnet',
+    temperature: 0.7,
+    max_tokens: 500,
+  }
+
+  // Persistir si hay visitorId y supabase disponible (fire-and-forget pattern)
   let conversationId: string | null = null
-  if (visitorId) {
+  if (supabase && visitorId) {
+    const db = supabase
     try {
-      conversationId = await getOrCreateConversation(supabase, agent.id, visitorId)
+      conversationId = await getOrCreateConversation(db, agent.id, visitorId)
 
       // Guardar ultimo mensaje del usuario (fire-and-forget)
       const lastUserMsg = [...messages].reverse().find(m => m.role === 'user')
@@ -109,13 +132,13 @@ export async function POST(req: Request) {
           .join('') || ''
 
         if (textContent) {
-          supabase.from('messages').insert({
+          db.from('messages').insert({
             conversation_id: conversationId,
             role: 'user',
             content: textContent,
           }).then(() => {
             // Actualizar updated_at de la conversacion
-            supabase.from('conversations')
+            db.from('conversations')
               .update({ updated_at: new Date().toISOString() })
               .eq('id', conversationId!)
               .then(() => {})
@@ -129,6 +152,7 @@ export async function POST(req: Request) {
   }
 
   const modelMessages = await convertToModelMessages(messages)
+  const db = supabase
 
   const result = streamText({
     model: openrouter(agent.model_id || MODELS.fast),
@@ -138,9 +162,9 @@ export async function POST(req: Request) {
     maxOutputTokens: agent.max_tokens,
     onFinish: async ({ text, usage }) => {
       // Guardar respuesta del assistant (fire-and-forget)
-      if (conversationId && text) {
+      if (db && conversationId && text) {
         const processingTime = Date.now() - startTime
-        supabase.from('messages').insert({
+        db.from('messages').insert({
           conversation_id: conversationId,
           role: 'assistant',
           content: text,
@@ -148,7 +172,7 @@ export async function POST(req: Request) {
           model_used: agent.model_id,
           processing_time_ms: processingTime,
         }).then(() => {
-          supabase.from('conversations')
+          db.from('conversations')
             .update({ updated_at: new Date().toISOString() })
             .eq('id', conversationId!)
             .then(() => {})

@@ -5,12 +5,10 @@ import Image from 'next/image'
 import {
   ArrowUpRight,
   Zap, Code2, BarChart3, Brain,
-  Clock, Sparkles, Users,
+  Clock, Sparkles, Users, Calendar,
 } from 'lucide-react'
 import { ChatWidget } from '@/features/chat/components/ChatWidget'
-
-const WHATSAPP_NUMBER = '+52 443 321 5051'
-const WHATSAPP_URL = `https://wa.me/524433215051?text=${encodeURIComponent('Hola, estoy interesado en construir software para mi negocio')}`
+import { CalendlyModal } from '@/features/calendly/components/CalendlyModal'
 
 const SERVICES = [
   { icon: Code2, title: 'Sistemas a Medida', desc: 'ERPs, CRMs y plataformas internas.' },
@@ -27,21 +25,16 @@ const DIFFERENTIATORS = [
 
 const PROJECTS = [
   {
-    name: 'SaaS Factory',
-    url: 'https://www.saasfactory.so',
-    desc: 'Comunidad para arquitectos de software. 263+ miembros en produccion.',
-    tags: ['Plataforma', 'Comunidad'],
-  },
-  {
-    name: 'Arbrain.ai',
-    url: 'https://www.arbrain.ai',
-    desc: 'Plataforma IA para negocios. Agente que analiza estrategias y metricas.',
-    tags: ['IA Conversacional', 'SaaS'],
+    name: 'Carlitos Liquor Store',
+    url: 'https://carlitosliquorstore.com',
+    desc: 'Plataforma de e-commerce personalizada con gestión de inventario y automatización de pedidos para licorería líder.',
+    tags: ['E-commerce', 'Automatización'],
   },
 ]
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
+  const [calendlyOpen, setCalendlyOpen] = useState(false)
 
   useEffect(() => { setMounted(true) }, [])
 
@@ -49,8 +42,8 @@ export default function Home() {
     <main className="h-screen bg-[var(--background)] relative overflow-hidden">
       {/* Background ambient - animated */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[15%] left-[20%] w-[500px] h-[500px] bg-violet-600/8 rounded-full blur-[120px] animate-breathe" />
-        <div className="absolute bottom-[20%] right-[25%] w-[400px] h-[400px] bg-purple-600/6 rounded-full blur-[100px] animate-breathe" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-[15%] left-[20%] w-[500px] h-[500px] bg-[#FFC400]/6 rounded-full blur-[120px] animate-breathe" />
+        <div className="absolute bottom-[20%] right-[25%] w-[400px] h-[400px] bg-[#E6B000]/5 rounded-full blur-[100px] animate-breathe" style={{ animationDelay: '2s' }} />
         <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-amber-500/4 rounded-full blur-[80px] animate-breathe" style={{ animationDelay: '4s' }} />
       </div>
 
@@ -61,19 +54,19 @@ export default function Home() {
         {/* Mobile top bar */}
         <div className="flex items-center justify-between px-3 py-2 flex-shrink-0">
           <div className="flex items-center gap-1.5">
-            <Image src="/logo.png" alt="SaaS Factory" width={22} height={22} className="rounded-md" />
-            <span className="text-[11px] font-semibold text-white">SaaS Factory</span>
+            <Image src="/logo-icon.png" alt="ailoom" width={22} height={22} className="rounded-full object-contain transition-all duration-300 hover:drop-shadow-[0_0_8px_rgba(255,196,0,0.6)]" unoptimized />
+            <span className="text-[11px] font-semibold text-white">ailoom</span>
           </div>
-          <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-2 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-[10px] text-emerald-400">
-            <WhatsAppIcon className="w-2.5 h-2.5" />
-            WhatsApp
-          </a>
+          <button onClick={() => setCalendlyOpen(true)} className="inline-flex items-center gap-1 px-2 py-1 rounded-full border border-[#FFC400]/30 bg-[#FFC400]/10 text-[10px] text-[#FFC400]">
+            <Calendar className="w-2.5 h-2.5" />
+            Agendar
+          </button>
         </div>
 
         {/* Mobile chat - fullscreen */}
         <div className={`flex-1 min-h-0 px-3 pb-2 ${mounted ? 'animate-fadeInScale delay-200' : 'opacity-0'}`}>
           <div className="relative h-full">
-            <div className="absolute -inset-2 bg-violet-600/10 rounded-2xl blur-xl" />
+            <div className="absolute -inset-2 bg-[#FFC400]/10 rounded-2xl blur-xl" />
             <div className="relative glass-panel-strong rounded-2xl overflow-hidden h-full">
               <ChatWidget />
             </div>
@@ -93,17 +86,17 @@ export default function Home() {
           {/* Brand - centered */}
           <div className={`flex items-center gap-2.5 mb-2.5 ${mounted ? 'animate-slideInLeft' : 'opacity-0'}`}>
             <div className="relative">
-              <Image src="/logo.png" alt="SaaS Factory" width={32} height={32} className="rounded-xl relative z-10" />
+              <Image src="/logo-icon.png" alt="ailoom" width={32} height={32} className="rounded-full object-contain relative z-10 transition-all duration-300 hover:drop-shadow-[0_0_10px_rgba(255,196,0,0.6)]" unoptimized />
               <div className="absolute inset-0 rounded-xl animate-goldPulse" />
             </div>
-            <span className="text-sm font-bold text-white tracking-tight">SaaS Factory</span>
+            <span className="text-sm font-bold text-white tracking-tight">ailoom</span>
           </div>
 
           {/* Hero copy - centered */}
           <div className={`text-center mb-2.5 ${mounted ? 'animate-slideInLeft delay-150' : 'opacity-0'}`}>
             <h1 className="text-xl xl:text-2xl 2xl:text-[1.7rem] font-bold text-white mb-1 leading-[1.15] tracking-tight">
               Tu Software{' '}
-              <span className="bg-gradient-to-r from-violet-400 via-purple-300 to-violet-400 bg-clip-text text-transparent shimmer-text">
+              <span className="bg-gradient-to-r from-[#FFC400] via-[#FFE066] to-[#FFC400] bg-clip-text text-transparent shimmer-text">
                 a Medida
               </span>
             </h1>
@@ -116,7 +109,7 @@ export default function Home() {
               {['ERPs & CRMs', 'Agentes IA', 'Automatizacion', 'Dashboards'].map((tag, i) => (
                 <span
                   key={tag}
-                  className={`px-2 py-0.5 text-[10px] rounded-full border border-violet-500/20 bg-violet-500/5 text-violet-300/80 ${
+                  className={`px-2 py-0.5 text-[10px] rounded-full border border-[#FFC400]/20 bg-[#FFC400]/5 text-[#FFC400]/80 ${
                     mounted ? `animate-cardReveal delay-${(i + 2) * 100}` : 'opacity-0'
                   }`}
                 >
@@ -126,23 +119,21 @@ export default function Home() {
             </div>
           </div>
 
-          {/* WhatsApp pill - centered above chat */}
+          {/* Calendly pill - centered above chat */}
           <div className={`mb-2.5 ${mounted ? 'animate-fadeInUp delay-200' : 'opacity-0'}`}>
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-[11px] text-emerald-400 hover:bg-emerald-500/20 hover:border-emerald-400/50 transition-all duration-300"
+            <button
+              onClick={() => setCalendlyOpen(true)}
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#FFC400]/30 bg-[#FFC400]/10 text-[11px] text-[#FFC400] hover:bg-[#FFC400]/20 hover:border-[#FFC400]/50 transition-all duration-300"
             >
-              <WhatsAppIcon className="w-3 h-3" />
-              {WHATSAPP_NUMBER}
-            </a>
+              <Calendar className="w-3 h-3" />
+              Agendar Auditoría de IA Gratuita
+            </button>
           </div>
 
           {/* Chat widget - fills ALL remaining vertical space */}
           <div className={`w-full flex-1 min-h-0 ${mounted ? 'animate-fadeInScale delay-300' : 'opacity-0'}`}>
             <div className="relative h-full max-w-[460px] mx-auto">
-              <div className="absolute -inset-3 bg-violet-600/15 rounded-3xl blur-2xl animate-pulseGlow" />
+              <div className="absolute -inset-3 bg-[#FFC400]/12 rounded-3xl blur-2xl animate-pulseGlow" />
               <div className="relative glass-panel-strong rounded-2xl overflow-hidden h-full">
                 <ChatWidget />
               </div>
@@ -158,7 +149,7 @@ export default function Home() {
             <div className={mounted ? 'animate-slideInRight' : 'opacity-0'}>
               <h2 className="text-xl xl:text-2xl 2xl:text-[1.7rem] font-bold text-white mb-1 leading-tight tracking-tight">
                 Software que{' '}
-                <span className="bg-gradient-to-r from-violet-400 to-purple-400 bg-clip-text text-transparent">opera</span>,{' '}
+                <span className="bg-gradient-to-r from-[#FFC400] to-[#FFD040] bg-clip-text text-transparent">opera</span>,{' '}
                 <span className="bg-gradient-to-r from-amber-400 to-yellow-400 bg-clip-text text-transparent shimmer-text">automatiza</span>
                 {' '}y escala
               </h2>
@@ -169,16 +160,16 @@ export default function Home() {
 
             {/* Services 2x2 grid */}
             <div className={mounted ? 'animate-slideInRight delay-100' : 'opacity-0'}>
-              <p className="text-[10px] uppercase tracking-widest text-violet-400/80 mb-1.5 font-medium">Lo que construimos</p>
+              <p className="text-[10px] uppercase tracking-widest text-[#FFC400]/80 mb-1.5 font-medium">Lo que construimos</p>
               <div className="grid grid-cols-2 gap-1.5 xl:gap-2">
                 {SERVICES.map((s, i) => (
                   <div
                     key={s.title}
-                    className={`glass-panel rounded-xl p-2.5 xl:p-3 hover:border-violet-500/40 hover:bg-violet-500/[0.03] transition-all duration-300 group cursor-default ${
+                    className={`glass-panel rounded-xl p-2.5 xl:p-3 hover:border-[#FFC400]/40 hover:bg-[#FFC400]/[0.03] transition-all duration-300 group cursor-default ${
                       mounted ? `animate-cardReveal delay-${(i + 2) * 100}` : 'opacity-0'
                     }`}
                   >
-                    <s.icon className="w-4 h-4 text-violet-400 mb-1 group-hover:text-violet-300 group-hover:drop-shadow-[0_0_8px_rgba(139,92,246,0.5)] transition-all duration-300" />
+                    <s.icon className="w-4 h-4 text-[#FFC400] mb-1 group-hover:text-[#FFD040] group-hover:drop-shadow-[0_0_8px_rgba(255,196,0,0.5)] transition-all duration-300" />
                     <h4 className="text-[11px] xl:text-xs font-semibold text-white mb-0.5">{s.title}</h4>
                     <p className="text-[10px] xl:text-[11px] text-[var(--muted)] leading-snug">{s.desc}</p>
                   </div>
@@ -212,7 +203,7 @@ export default function Home() {
             {/* Projects side-by-side */}
             <div className={mounted ? 'animate-slideInRight delay-500' : 'opacity-0'}>
               <p className="text-[10px] uppercase tracking-widest text-emerald-400/70 mb-1.5 font-medium">Proyectos en produccion</p>
-              <div className="grid grid-cols-2 gap-1.5 xl:gap-2">
+              <div className="grid grid-cols-1 gap-1.5 xl:gap-2">
                 {PROJECTS.map((p, i) => (
                   <a
                     key={p.name}
@@ -239,25 +230,23 @@ export default function Home() {
             </div>
 
             {/* CTA - inline */}
-            <div className={`glass-panel rounded-xl p-3 xl:p-3.5 border-emerald-500/20 bg-gradient-to-r from-emerald-500/5 via-emerald-500/[0.02] to-transparent ${
+            <div className={`glass-panel rounded-xl p-3 xl:p-3.5 border-[#FFC400]/20 bg-gradient-to-r from-[#FFC400]/5 via-[#FFC400]/[0.02] to-transparent ${
               mounted ? 'animate-cardReveal delay-900' : 'opacity-0'
             }`}>
               <div className="flex items-center justify-between gap-4">
                 <div>
-                  <h3 className="text-xs xl:text-sm font-bold text-white mb-0.5">Diagnostico gratuito</h3>
+                  <h3 className="text-xs xl:text-sm font-bold text-white mb-0.5">Auditoría de IA Gratuita</h3>
                   <p className="text-[10px] xl:text-[11px] text-[var(--muted)] leading-snug">
-                    Sin compromiso. En 15 minutos te damos un plan de accion concreto.
+                    30 min con el fundador de ailoom. Plan de acción concreto para tu negocio.
                   </p>
                 </div>
-                <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-500 text-white text-[11px] xl:text-xs font-medium hover:bg-emerald-400 hover:shadow-[0_0_24px_rgba(16,185,129,0.4)] transition-all duration-300 whitespace-nowrap flex-shrink-0"
+                <button
+                  onClick={() => setCalendlyOpen(true)}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#FFC400] text-black text-[11px] xl:text-xs font-medium hover:bg-[#FFD040] hover:shadow-[0_0_24px_rgba(255,196,0,0.4)] transition-all duration-300 whitespace-nowrap flex-shrink-0"
                 >
-                  <WhatsAppIcon className="w-3.5 h-3.5" />
-                  {WHATSAPP_NUMBER}
-                </a>
+                  <Calendar className="w-3.5 h-3.5" />
+                  Agendar Auditoría
+                </button>
               </div>
             </div>
 
@@ -265,14 +254,7 @@ export default function Home() {
         </div>
       </div>
 
+      <CalendlyModal isOpen={calendlyOpen} onClose={() => setCalendlyOpen(false)} />
     </main>
-  )
-}
-
-function WhatsAppIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-    </svg>
   )
 }
