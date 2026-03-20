@@ -94,12 +94,16 @@ export default function Home() {
         {/* Services */}
         <div className="px-4 pb-5">
           <p className="text-[10px] uppercase tracking-widest text-[#FFC400]/80 font-medium mb-2">Lo que construimos</p>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="flex flex-col gap-2">
             {SERVICES.map((s) => (
-              <div key={s.title} className="glass-panel rounded-xl p-3">
-                <s.icon className="w-4 h-4 text-[#FFC400] mb-1.5" />
-                <h4 className="text-xs font-semibold text-white mb-0.5">{s.title}</h4>
-                <p className="text-[10px] text-[var(--muted)] leading-snug">{s.desc}</p>
+              <div key={s.title} className="glass-panel rounded-xl p-4 flex items-center gap-4">
+                <div className="w-10 h-10 rounded-xl bg-[#FFC400]/10 border border-[#FFC400]/20 flex items-center justify-center flex-shrink-0">
+                  <s.icon className="w-5 h-5 text-[#FFC400]" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-semibold text-white mb-0.5">{s.title}</h4>
+                  <p className="text-xs text-[var(--muted)] leading-snug">{s.desc}</p>
+                </div>
               </div>
             ))}
           </div>
