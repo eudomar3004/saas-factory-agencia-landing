@@ -24,7 +24,7 @@ function getVisitorId(): string {
 const AVATAR = '/logo-icon.png'
 const AVATAR_CLS = 'rounded-full object-contain flex-shrink-0 drop-shadow-[0_0_4px_rgba(255,196,0,0.3)]'
 
-export function ChatWidget() {
+export function ChatWidget({ hideHeader = false }: { hideHeader?: boolean } = {}) {
   const visitorIdRef = useRef<string>('')
   const { messages, status, error, sendMessage } = useChat()
   const [input, setInput] = useState('')
@@ -65,16 +65,18 @@ export function ChatWidget() {
   return (
     <div className="flex flex-col h-full" suppressHydrationWarning>
       {/* Header */}
-      <div className="flex items-center gap-2.5 p-3 border-b border-[var(--border)]">
-        <div className="relative flex-shrink-0">
-          <Image src={AVATAR} alt="Ailo" width={44} height={44} className={`w-11 h-11 mt-0 drop-shadow-[0_0_6px_rgba(255,196,0,0.35)] ${AVATAR_CLS}`} unoptimized />
-          <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-[var(--surface)]" />
+      {!hideHeader && (
+        <div className="flex items-center gap-2.5 p-3 border-b border-[var(--border)]">
+          <div className="relative flex-shrink-0">
+            <Image src={AVATAR} alt="Ailo" width={44} height={44} className={`w-11 h-11 mt-0 drop-shadow-[0_0_6px_rgba(255,196,0,0.35)] ${AVATAR_CLS}`} unoptimized />
+            <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-[var(--surface)]" />
+          </div>
+          <div>
+            <h3 className="text-xs font-semibold text-white">Ailo</h3>
+            <p className="text-[10px] text-[var(--muted)]">Consultor IA · ailoom</p>
+          </div>
         </div>
-        <div>
-          <h3 className="text-xs font-semibold text-white">Ailo</h3>
-          <p className="text-[10px] text-[var(--muted)]">Consultor IA · ailoom</p>
-        </div>
-      </div>
+      )}
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-3 space-y-2.5 scrollbar-hide">
