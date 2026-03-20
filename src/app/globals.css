@@ -36,9 +36,15 @@
 }
 
 html, body {
-  overflow: hidden;
-  height: 100vh;
-  height: 100dvh;
+  min-height: 100%;
+}
+
+/* Desktop only: lock viewport so the split layout doesn't scroll */
+@media (min-width: 1024px) {
+  html, body {
+    overflow: hidden;
+    height: 100dvh;
+  }
 }
 
 body {

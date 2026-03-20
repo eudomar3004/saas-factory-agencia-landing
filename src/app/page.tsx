@@ -70,7 +70,7 @@ export default function Home() {
         </div>
 
         {/* Hero */}
-        <div className={`px-5 pt-8 pb-6 text-center ${mounted ? 'animate-fadeInUp' : 'opacity-0'}`}>
+        <div className="px-5 pt-8 pb-6 text-center">
           <h1 className="text-2xl font-bold text-white mb-2 leading-tight tracking-tight">
             Tu Software{' '}
             <span className="bg-gradient-to-r from-[#FFC400] via-[#FFE066] to-[#FFC400] bg-clip-text text-transparent shimmer-text">
@@ -92,7 +92,7 @@ export default function Home() {
         </div>
 
         {/* Services */}
-        <div className={`px-4 pb-5 ${mounted ? 'animate-fadeInUp delay-100' : 'opacity-0'}`}>
+        <div className="px-4 pb-5">
           <p className="text-[10px] uppercase tracking-widest text-[#FFC400]/80 font-medium mb-2">Lo que construimos</p>
           <div className="grid grid-cols-2 gap-2">
             {SERVICES.map((s) => (
@@ -106,7 +106,7 @@ export default function Home() {
         </div>
 
         {/* Differentiators */}
-        <div className={`px-4 pb-5 ${mounted ? 'animate-fadeInUp delay-200' : 'opacity-0'}`}>
+        <div className="px-4 pb-5">
           <p className="text-[10px] uppercase tracking-widest text-amber-400/70 font-medium mb-2">Nuestro diferenciador</p>
           <div className="space-y-2">
             {DIFFERENTIATORS.map((d) => (
@@ -124,7 +124,7 @@ export default function Home() {
         </div>
 
         {/* Projects */}
-        <div className={`px-4 pb-5 ${mounted ? 'animate-fadeInUp delay-300' : 'opacity-0'}`}>
+        <div className="px-4 pb-5">
           <p className="text-[10px] uppercase tracking-widest text-emerald-400/70 font-medium mb-2">Proyectos en produccion</p>
           {PROJECTS.map((p) => (
             <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer"
@@ -145,7 +145,7 @@ export default function Home() {
         </div>
 
         {/* CTA */}
-        <div className={`px-4 pb-28 ${mounted ? 'animate-fadeInUp delay-400' : 'opacity-0'}`}>
+        <div className="px-4 pb-28">
           <div className="glass-panel rounded-xl p-4 border-[#FFC400]/20 bg-gradient-to-r from-[#FFC400]/5 to-transparent">
             <h3 className="text-sm font-bold text-white mb-1">Auditoría de IA Gratuita</h3>
             <p className="text-[11px] text-[var(--muted)] mb-3">30 min con el fundador de ailoom. Plan de acción concreto para tu negocio.</p>
